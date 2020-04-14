@@ -1,3 +1,3 @@
-AtCoder Beginner ContestでACしたコード
+AtCoder Beginner ContestでACしたコードとかライブラリとか
 
-by https://atcoder.jp/users/HAPPA
+https://atcoder.jp/users/HAPPA
