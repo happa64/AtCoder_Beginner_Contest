@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc001/tasks/abc001_1
+# A - 積雪深差
 import sys
 
 sys.setrecursionlimit(10 ** 7)

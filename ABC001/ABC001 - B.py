@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc001/tasks/abc001_2
+# B - 視程の通報
 import sys
 
 sys.setrecursionlimit(10 ** 7)

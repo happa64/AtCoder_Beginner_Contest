@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc001/tasks/abc001_4
+# D - 感雨時刻の整理
 import sys
 
 sys.setrecursionlimit(10 ** 7)
