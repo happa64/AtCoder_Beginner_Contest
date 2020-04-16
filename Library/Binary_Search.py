@@ -10,7 +10,7 @@ def meguru_bisect(ng, ok):
     ng ok は  とり得る最小の値-1 とり得る最大の値+1
     最大最小が逆の場合はよしなにひっくり返す
     """
-    while abs(ok - ng) > 10 ** (-7):
+    while abs(ok - ng) > 1:
         mid = (ok + ng) // 2
         if is_ok(mid):
             ok = mid
