@@ -24,5 +24,35 @@ def resolve():
     print(res)
 
 
+# 再帰版
+def resolve2():
+    n, m, q = map(int, input().split())
+    ABCD = [list(map(int, input().split())) for _ in range(q)]
+
+    # 数列Aのスコアを返す
+    def calc_score(L):
+        score = 0
+        for a, b, c, d in ABCD:
+            if L[b - 1] - L[a - 1] == c:
+                score += d
+        return score
+
+    # 数列Aを全パターン試す
+    def dfs(A):
+        if len(A) == n:
+            return calc_score(A)
+
+        res = 0
+        prev = A[-1] if len(A) > 0 else 1
+        for v in range(prev, m + 1):
+            A.append(v)
+            res = max(res, dfs(A))
+            A.pop()
+
+        return res
+
+    print(dfs([]))
+
+
 if __name__ == '__main__':
     resolve()
