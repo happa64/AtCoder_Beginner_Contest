@@ -42,5 +42,26 @@ def resolve():
         print(depth.index(res) + 1)
 
 
+def resolve2():
+    # ダブリング：O(NlogK)なのでpypyじゃないと通りません
+    n, k = map(int, input().split())
+    to = [[-1] * n for _ in range(60)]
+    to[0] = list(map(lambda x: int(x) - 1, input().split()))
+
+    # 2^i回テレポートした後何処にいるのか？
+    for i in range(59):
+        for j in range(n):
+            to[i + 1][j] = to[i][to[i][j]]
+
+    v = 0
+    for i in reversed(range(60)):
+        l = 1 << i
+        if l <= k:
+            v = to[i][v]
+            k -= l
+
+    print(v + 1)
+
+
 if __name__ == '__main__':
-    resolve()
+    resolve2()
