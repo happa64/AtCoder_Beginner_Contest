@@ -1,10 +1,9 @@
 import heapq
 
-
 # ダイクストラ法：O(ElogV)
 def dijkstra_heap(s):
     # 始点sから各頂点への最短距離
-    d = [float("inf")] * n
+    d = [f_inf] * n
     used = [True] * n  # True:未確定
     d[s] = 0
     used[s] = False
