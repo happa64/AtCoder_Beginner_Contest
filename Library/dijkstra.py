@@ -1,4 +1,29 @@
+def dijkstra(s):
+    # 始点sから各頂点への最短距離
+    # n:頂点数, cost[u][v]:辺uvのコスト(存在しないときはinf)
+    d = [f_inf] * (n + 2)
+    used = [False] * (n + 2)
+    d[s] = 0
+
+    while True:
+        v = -1
+        # まだ使われてない頂点の中から最小の距離のものを探す
+        for k in range(n + 2):
+            if (not used[k]) and (v == -1):
+                v = k
+            elif (not used[k]) and d[k] < d[v]:
+                v = k
+        if v == -1:
+            break
+        used[v] = True
+
+        for m in range(n + 2):
+            d[m] = min(d[m], d[v] + cost[v][m])
+    return d
+
+
 import heapq
+
 
 # ダイクストラ法：O(ElogV)
 def dijkstra_heap(s):
@@ -23,6 +48,7 @@ def dijkstra_heap(s):
                 heapq.heappush(edgelist, [e[0] + d[v], e[1]])
     return d
 
+
 # v:始点から各頂点への距離を計算：O(V)
 def dfs(v, p, d):
     depth[v] = d
@@ -30,6 +56,7 @@ def dfs(v, p, d):
         if u == p:
             continue
         dfs(u, v, d + c)
+
 
 edge = [[] for _ in range(n)]
 for _ in range(n - 1):
