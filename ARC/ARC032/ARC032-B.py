@@ -60,5 +60,31 @@ def resolve():
     print(res)
 
 
+def resolve2():
+    n, m = map(int, input().split())
+    tree = [[] for _ in range(n)]
+    for _ in range(m):
+        a, b = map(int, input().split())
+        tree[a - 1].append(b - 1)
+        tree[b - 1].append(a - 1)
+
+    def dfs(v):
+        for u in tree[v]:
+            if visited[u]:
+                continue
+            else:
+                visited[u] = True
+                dfs(u)
+
+    visited = [False for _ in range(n)]
+    res = -1
+    for i in range(n):
+        if not visited[i]:
+            res += 1
+            dfs(i)
+
+    print(res)
+
+
 if __name__ == '__main__':
-    resolve()
+    resolve2()
