@@ -44,5 +44,5 @@ def kruskal(max_node, edge):
     for cost, node1, node2 in edge:
         if not uf.same(node1, node2):
             cost_sum += cost
-            uf.union(a, b)
+            uf.union(node1, node2)
     return cost_sum
