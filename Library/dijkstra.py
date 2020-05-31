@@ -49,6 +49,29 @@ def dijkstra_heap(s):
     return d
 
 
+# 二次元グリッドにおけるダイクストラ法
+def dijkstra_heap_2d(H, W, grid, sh, sw):
+    dist = [[f_inf] * W for _ in range(H)]
+    dist[sh][sw] = 0
+    que = [(dist[sh][sw], sh, sw)]
+    heapq.heapify(que)
+    while que:
+        d, h, w = heapq.heappop(que)
+        if dist[h][w] < d:
+            continue
+        for dh, dw in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            next_h, next_w = h + dh, w + dw
+            if next_h < 0 or next_h >= H or next_w < 0 or next_w >= W:
+                continue
+            elif grid[next_h][next_w] == "#":
+                continue
+            else:
+                if dist[next_h][next_w] > grid[next_h][next_w] + dist[h][w]:
+                    dist[next_h][next_w] = grid[next_h][next_w] + dist[h][w]
+                    heapq.heappush(que, (dist[next_h][next_w], next_h, next_w))
+    return dist
+
+
 # v:始点から各頂点への距離を計算：O(V)
 def dfs(v, p, d):
     depth[v] = d
