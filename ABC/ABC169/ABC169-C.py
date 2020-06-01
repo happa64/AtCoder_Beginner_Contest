@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc169/submissions/13799376
+# https://atcoder.jp/contests/abc169/submissions/13921772?lang=ja
 # C - Multiplication 3
 import sys
 import math
