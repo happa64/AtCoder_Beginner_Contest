@@ -10,7 +10,7 @@ mod = 10 ** 9 + 7
 
 def resolve():
     a, b, c = input().split()
-    print("Yes" if Decimal(a) ** Decimal(0.5) + Decimal(b) ** Decimal(0.5) < Decimal(c) ** Decimal(0.5) else "No")
+    print("Yes" if Decimal(a) ** Decimal("0.5") + Decimal(b) ** Decimal("0.5") < Decimal(c) ** Decimal("0.5") else "No")
 
 
 if __name__ == '__main__':
