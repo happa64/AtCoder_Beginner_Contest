@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc065/submissions/13711658
+# https://atcoder.jp/contests/abc065/submissions/13927700
 # D - Built?
 import sys
 
@@ -63,20 +63,18 @@ def resolve():
     X, Y = [], []
     for i in range(n):
         x, y = map(int, input().split())
-        X.append([i, x])
-        Y.append([i, y])
+        X.append([x, i])
+        Y.append([y, i])
 
-    def calc(L):
-        for i in range(n - 1):
-            cost = abs(L[i][1] - L[i + 1][1])
-            edge.append((cost, L[i][0], L[i + 1][0]))
+    X.sort()
+    Y.sort()
+    cost = []
+    for i in range(n - 1):
+        cost.append([abs(X[i][0] - X[i + 1][0]), X[i][1], X[i + 1][1]])
+        cost.append([abs(Y[i][0] - Y[i + 1][0]), Y[i][1], Y[i + 1][1]])
 
-    edge = []
-    X.sort(key=lambda x: x[1])
-    Y.sort(key=lambda x: x[1])
-    calc(X)
-    calc(Y)
-    print(kruskal(n, edge))
+    res = kruskal(n, cost)
+    print(res)
 
 
 if __name__ == '__main__':
