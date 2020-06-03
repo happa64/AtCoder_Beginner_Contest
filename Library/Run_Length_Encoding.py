@@ -1,12 +1,17 @@
-# ランレングス圧縮
-def rle(s):
-    tmp, count, ans = s[0], 1, ""
-    for i in range(1, len(s)):
-        if tmp == s[i]:
-            count += 1
-        else:
-            ans += tmp + str(count)
-            tmp = s[i]
-            count = 1
-    ans += tmp + str(count)
-    return ans
+class RunLengthEncoding:
+    def __init__(self, s):
+        self.s = s
+        self.ans = ""
+        self.count = 0
+
+    def encoding(self):
+        tmp = self.s[0]
+        for i in range(len(s)):
+            if tmp == s[i]:
+                self.count += 1
+            else:
+                self.ans += tmp + str(self.count)
+                self.count = 1
+                tmp = s[i]
+        return self.ans + tmp + str(self.count)
+
