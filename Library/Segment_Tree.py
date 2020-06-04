@@ -1,31 +1,9 @@
-# 区間(x,y)に対して行いたい操作の入力
-def segfunc(x, y):
-    """
-    最小値：min(x,y)
-    最大値：max(x,y)
-    和：x + y
-    積：x * y
-    最大公約数：math.gcd(x, y)
-    """
-    return min(x, y)
-
-
-# 単位元の入力
-# 最小値；f_inf
-# 最大値：-f_inf
-# 和:0
-# 積:1
-# 最大公約数:0
-ide_ele = f_inf
-
-
 class SegTree:
     """
     init(init_val, ide_ele): 配列init_valで初期化 O(N)
     update(k, x): k番目の値をxに更新 O(N)
     query(l, r): 区間[l, r)をsegfuncしたものを返す O(logN)
     """
-
     def __init__(self, init_val, segfunc, ide_ele):
         """
         init_val: 配列の初期値
@@ -66,7 +44,6 @@ class SegTree:
         right: index(0-index)
         """
         res = self.ide_ele
-
         left += self.num
         right += self.num
         while left < right:
@@ -80,4 +57,18 @@ class SegTree:
         return res
 
 
+def segfunc(x, y):
+    """
+    区間(x,y)に対して行いたい操作の入力
+    最小値：min(x,y)
+    最大値：max(x,y)
+    和：x + y
+    積：x * y
+    最大公約数：math.gcd(x, y)
+    """
+    return min(x, y)
+
+
+# 単位元の入力
+ide_ele = f_inf
 seg = SegTree(a, segfunc, ide_ele)
