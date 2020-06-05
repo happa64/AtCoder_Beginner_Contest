@@ -17,21 +17,16 @@ def resolve():
     for i in range(1, n):
         pre_s, pre_t, pre_c = tmp
         now_s, now_t, now_c = STC[i]
-        if pre_c == now_c:
-            if pre_t == now_s:
-                tmp = [pre_s, now_t, now_c]
-            else:
-                STC2.append(tmp)
-                tmp = STC[i]
-        else:
-            STC2.append(tmp)
-            tmp = STC[i]
+        if pre_c == now_c and pre_t == now_s:
+            tmp = [pre_s, now_t, now_c]
+            continue
+        STC2.append(tmp)
+        tmp = STC[i]
     if len(tmp):
         STC2.append(tmp)
 
     imos = [[0] * (10 ** 5 + 1) for _ in range(c)]
-    for i in range(len(STC2)):
-        s, t, c = STC2[i]
+    for s, t, c in STC2:
         imos[c - 1][s - 1] += 1
         imos[c - 1][t] -= 1
 
