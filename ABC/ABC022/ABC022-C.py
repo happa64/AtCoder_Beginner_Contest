@@ -19,8 +19,6 @@ def resolve():
         C[v - 1][u - 1] = l
         if u - 1 == 0:
             edge.append(v - 1)
-        elif v - 1 == 0:
-            edge.append(u - 1)
 
     for i in range(n):
         C[i][i] = 0
@@ -38,5 +36,30 @@ def resolve():
     print(res if res != f_inf else -1)
 
 
+def resolve2():
+    import numpy as np
+    import scipy.sparse.csgraph as csg
+
+    n, m = map(int, input().split())
+    C = np.array([[f_inf] * n for _ in range(n)])
+    edge = []
+    for _ in range(m):
+        u, v, l = map(int, input().split())
+        if u == 1:
+            edge.append((v - 1, l))
+        else:
+            C[u - 1][v - 1] = l
+            C[v - 1][u - 1] = l
+
+    C = csg.floyd_warshall(C)
+
+    res = f_inf
+    for X, Y in combinations(edge, 2):
+        dist = C[X[0]][Y[0]] + X[1] + Y[1]
+        res = min(res, dist)
+
+    print(int(res) if res != f_inf else -1)
+
+
 if __name__ == '__main__':
-    resolve()
+    resolve2()
