@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/13520421
+# https://atcoder.jp/contests/past202005-open/submissions/14079411
 # G - グリッド金移動
 import sys
 from collections import deque

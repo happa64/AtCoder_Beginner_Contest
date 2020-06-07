@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/13498974
+# https://atcoder.jp/contests/past202005-open/submissions/14079403
 # B - ダイナミック・スコアリング
 import sys
 

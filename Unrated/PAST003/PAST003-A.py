@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/13495277
+# https://atcoder.jp/contests/past202005-open/submissions/14079299
 # A - ケース・センシティブ
 import sys
 

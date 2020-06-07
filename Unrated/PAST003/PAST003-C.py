@@ -10,10 +10,10 @@ mod = 10 ** 9 + 7
 def resolve():
     A, R, N = map(int, input().split())
 
-    res = A
     if R == 1:
         print(A)
     else:
+        res = A
         for i in range(N - 1):
             res *= R
             if res > 10 ** 9:

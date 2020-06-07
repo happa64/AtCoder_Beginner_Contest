@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/13506108
+# https://atcoder.jp/contests/past202005-open/submissions/14079345
 # D - 電光掲示板
 import sys
 

@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/14063606
+# https://atcoder.jp/contests/past202005-open/submissions/14079420
 # F - 回文行列
 import sys
 

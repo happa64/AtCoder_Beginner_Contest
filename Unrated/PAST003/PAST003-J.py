@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/14066094
+# https://atcoder.jp/contests/past202005-open/submissions/14079434
 # J - 回転寿司
 import sys
 import bisect

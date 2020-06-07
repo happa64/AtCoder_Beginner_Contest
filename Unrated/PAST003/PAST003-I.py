@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/14065689
+# https://atcoder.jp/contests/past202005-open/submissions/14079427
 # I - 行列操作
 import sys
 

@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/13508695
+# https://atcoder.jp/contests/past202005-open/submissions/14079372
 # E - スプリンクラー
 import sys
 

@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/past202005/submissions/13531886
+# https://atcoder.jp/contests/past202005-open/submissions/14079417
 # H - ハードル走
 import sys
 
