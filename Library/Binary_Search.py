@@ -1,14 +1,14 @@
-def meguru_bisect(left, right):
+def meguru_bisect(ok, ng):
     """
     is_okを定義して下さい
-    :param left: 取りうる最小の値-1
-    :param right: 取りうる最大の値+1
+    :param ok: 取りうる最小の値-1
+    :param ng: 取りうる最大の値+1
     :return: is_okを満たす最小(もしくは最大)の値
     """
-    while abs(left - right) > 1:
-        mid = (left + right) // 2
+    while abs(ok - ng) > 10 ** (-7):
+        mid = (ok + ng) / 2
         if is_ok(mid):
-            right = mid
+            ok = mid
         else:
-            left = mid
-    return right
+            ng = mid
+    return ok
