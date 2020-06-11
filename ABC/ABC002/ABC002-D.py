@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc002/tasks/abc002_4
+# https://atcoder.jp/contests/abc002/submissions/14177833
 # D - 派閥
 import sys
 from itertools import product, combinations
@@ -9,15 +9,16 @@ input = sys.stdin.readline
 
 def resolve():
     n, m = map(int, input().split())
-    xy = [tuple(map(int, input().split())) for _ in range(m)]
+    XY = [list(map(int, input().split())) for _ in range(m)]
+
     res = 0
     for pattern in product([0, 1], repeat=n):
         f = []
         for idx, p in enumerate(pattern):
             if p == 1:
                 f.append(idx + 1)
-        for i in combinations(f, 2):
-            if i not in xy:
+        for x, y in combinations(f, 2):
+            if [x, y] not in XY:
                 break
         else:
             res = max(res, sum(pattern))
