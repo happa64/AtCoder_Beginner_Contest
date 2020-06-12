@@ -1,7 +1,7 @@
-# https://atcoder.jp/contests/arc028/submissions/14192382
+# https://atcoder.jp/contests/arc028/submissions/14192508
 # B - 特別賞
 import sys
-from heapq import heappop, heappush
+from heapq import heapreplace, heappush
 
 sys.setrecursionlimit(10 ** 7)
 input = sys.stdin.readline
@@ -23,8 +23,7 @@ def resolve():
 
     for i in range(k, n):
         if x[i] < kth_age:
-            heappop(que)
-            heappush(que, [-x[i], i + 1])
+            heapreplace(que, [-x[i], i + 1])
             kth_age, Rank = que[0]
             print(Rank)
             kth_age *= -1
