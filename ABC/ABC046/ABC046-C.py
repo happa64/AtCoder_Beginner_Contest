@@ -17,6 +17,7 @@ def resolve():
         if t_pev <= t_now and a_prev <= a_now:
             t_pev, a_prev = t_now, a_now
         else:
+            # math.ceilを使うと誤差でWAになる為気を付けましょう
             d = max((t_pev + (t_now - 1)) // t_now, (a_prev + (a_now - 1)) // a_now)
             t_pev, a_prev = t_now * d, a_now * d
     print(t_pev + a_prev)
