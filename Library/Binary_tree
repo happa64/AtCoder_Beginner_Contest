@@ -1,0 +1,68 @@
+class BinaryTree:
+    def __init__(self, data=None):  # デフォルト値を使うのはrootのみ
+        self.data = data
+        self.left = None
+        self.right = None
+
+    def search(self, data):
+        """
+        root.search(x): ◯.data == x のものが存在するある場合それを出力、ない場合Noneを出力
+        """
+        if self.data is None:
+            return None
+        if data < self.data:
+            if self.left is None:
+                return None
+            else:
+                return self.left.search(data)
+        elif data > self.data:
+            if self.right is None:
+                return None
+            else:
+                return self.right.search(data)
+        else:
+            return self
+
+    def insert(self, data):
+        """
+        root.insert(x): ◯.data == xが存在する場合Falseを出力、ない場合◯.data == x なる頂点を作る
+        """
+        if self.data is None:
+            self.data = data
+            return self
+        if data < self.data:
+            if self.left is None:
+                self.left = BinaryTree(data)
+                return True
+            else:
+                return self.left.insert(data)
+        elif data > self.data:
+            if self.right is None:
+                self.right = BinaryTree(data)
+                return True
+            else:
+                return self.right.insert(data)
+        else:
+            return False
+
+    def to_s(self):
+        """
+        y.to_s(): 頂点yのdataを出力
+        """
+        return self.data
+
+    def left_s(self):
+        """
+        y.left_s(): 頂点yのleftを出力(ない場合はNone)
+        """
+        if self.left is None:
+            return None
+        return self.left.data
+
+    def right_s(self):
+        """
+        y.right_s(): 頂点yのrightを出力(ない場合はNone)
+        """
+        if self.right is None:
+            return None
+        return self.right.data
