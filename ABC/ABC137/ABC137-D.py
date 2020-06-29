@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc137/submissions/14833539
+# D - Summer Vacation
 import sys
 from heapq import heappush, heappop
 
