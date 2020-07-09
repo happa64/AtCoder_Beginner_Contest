@@ -1,7 +1,7 @@
 class BIT:
     def __init__(self, L):
         self.n = len(L)
-        self.bit = [0] * (n + 1)
+        self.bit = [0] * (self.n + 1)
 
     def query(self, idx):
         res = 0
