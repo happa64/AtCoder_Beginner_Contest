@@ -1,88 +1,75 @@
-def dijkstra(s):
-    # 始点sから各頂点への最短距離
-    # n:頂点数, cost[u][v]:辺uvのコスト(存在しないときはinf)
-    d = [f_inf] * (n + 2)
-    used = [False] * (n + 2)
-    d[s] = 0
-
-    while True:
-        v = -1
-        # まだ使われてない頂点の中から最小の距離のものを探す
-        for k in range(n + 2):
-            if (not used[k]) and (v == -1):
-                v = k
-            elif (not used[k]) and d[k] < d[v]:
-                v = k
-        if v == -1:
-            break
-        used[v] = True
-
-        for m in range(n + 2):
-            d[m] = min(d[m], d[v] + cost[v][m])
-    return d
+from heapq import heapify, heappop, heappush
 
 
-import heapq
+def dijkstra_heap(v, start, edge):
+    """
+    ダイクストラ法
+    :param v: 走査するグラフの頂点数
+    :param start: 始点
+    :param edge: 重み付き隣接リスト。[cost, node]の形で渡す
+    :return: 始点から各頂点への最短距離
+    """
+    res = [f_inf] * v
+    res[start] = 0
+    checked = [False] * v
+    checked[start] = True
+    edge_list = []
+    for u in edge[start]:
+        heappush(edge_list, u)
+    while len(edge_list):
+        min_edge = heappop(edge_list)
+        cost, node = min_edge
+        if not checked[node]:
+            res[node] = cost
+            checked[node] = True
+            for next_cost, next_node in edge[node]:
+                if not checked[next_node]:
+                    heappush(edge_list, [next_cost + cost, next_node])
+    return res
 
 
-# ダイクストラ法：O(ElogV)
-def dijkstra_heap(s):
-    # 始点sから各頂点への最短距離
-    d = [f_inf] * n
-    used = [True] * n  # True:未確定
-    d[s] = 0
-    used[s] = False
-    edgelist = []
-    for e in edge[s]:
-        heapq.heappush(edgelist, e)
-    while len(edgelist):
-        minedge = heapq.heappop(edgelist)
-        # まだ使われてない頂点の中から最小の距離のものを探す
-        if not used[minedge[1]]:
-            continue
-        v = minedge[1]
-        d[v] = minedge[0]
-        used[v] = False
-        for e in edge[v]:
-            if used[e[1]]:
-                heapq.heappush(edgelist, [e[0] + d[v], e[1]])
-    return d
-
-
-# 二次元グリッドにおけるダイクストラ法
 def dijkstra_heap_2d(H, W, grid, sh, sw):
-    dist = [[f_inf] * W for _ in range(H)]
-    dist[sh][sw] = 0
-    que = [(dist[sh][sw], sh, sw)]
-    heapq.heapify(que)
+    """
+    二次元グリッドにおけるダイクストラ法
+    :param H:グリッドの縦の長さ
+    :param W: グリッドの横の長さ
+    :param grid: グリッドの情報
+    :param sh: 始点のy座標
+    :param sw: 始点のx座標
+    :return: 始点から各頂点への最短距離
+    """
+    res = [[f_inf] * W for _ in range(H)]
+    res[sh][sw] = 0
+    que = [(0, sh, sw)]
+    heapify(que)
     while que:
-        d, h, w = heapq.heappop(que)
-        if dist[h][w] < d:
+        d, h, w = heappop(que)
+        if res[h][w] < d:
             continue
         for dh, dw in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             next_h, next_w = h + dh, w + dw
-            if next_h < 0 or next_h >= H or next_w < 0 or next_w >= W:
+            if next_h < 0 or next_h >= H or next_w < 0 or next_w >= W or grid[next_h][next_w] == "#":
                 continue
-            elif grid[next_h][next_w] == "#":
-                continue
-            else:
-                if dist[next_h][next_w] > grid[next_h][next_w] + dist[h][w]:
-                    dist[next_h][next_w] = grid[next_h][next_w] + dist[h][w]
-                    heapq.heappush(que, (dist[next_h][next_w], next_h, next_w))
-    return dist
+            if res[next_h][next_w] > grid[next_h][next_w] + res[h][w]:
+                res[next_h][next_w] = grid[next_h][next_w] + res[h][w]
+                heappush(que, (res[next_h][next_w], next_h, next_w))
+    return res
 
 
-# v:始点から各頂点への距離を計算：O(V)
-def dfs(v, p, d):
-    depth[v] = d
-    for c, u in edge[v]:
-        if u == p:
-            continue
-        dfs(u, v, d + c)
-
-
-edge = [[] for _ in range(n)]
-for _ in range(n - 1):
-    a, b, c = map(int, input().split())
-    edge[a - 1].append([c, b - 1])
-    edge[b - 1].append([c, a - 1])
+def dijkstra(s):
+    res = [f_inf] * (n + 2)
+    res[s] = 0
+    checked = [False] * (n + 2)
+    while True:
+        v = -1
+        for k in range(n + 2):
+            if (not checked[k]) and (v == -1):
+                v = k
+            elif (not checked[k]) and res[k] < res[v]:
+                v = k
+        if v == -1:
+            break
+        checked[v] = True
+        for m in range(n + 2):
+            res[m] = min(res[m], res[v] + cost[v][m])
+    return res
