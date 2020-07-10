@@ -38,18 +38,15 @@ class UnionFind:
         """
         return -self.parents[self.find(x)]
 
-
-def kruskal(max_node, edge):
-    """
-    :param max_node: UnionFind木に渡す頂点数です
-    :param edge: edge = [(コスト, 頂点1, 頂点2),...]の形で重み付き隣接リストを渡して下さい
-    :return: 最小全域木のコストの和
-    """
-    edge.sort()
-    uf = UnionFind(max_node)
-    cost_sum = 0
-    for cost, node1, node2 in edge:
-        if not uf.same(node1, node2):
-            cost_sum += cost
-            uf.union(node1, node2)
-    return cost_sum
+    def kruskal(self, edge):
+        """
+        :param edge: edge = [(コスト, 頂点1, 頂点2),...]の形で重み付き隣接リストを渡して下さい
+        :return: 最小全域木のコストの和
+        """
+        edge.sort()
+        cost_sum = 0
+        for cost, node1, node2 in edge:
+            if not self.same(node1, node2):
+                cost_sum += cost
+                self.union(node1, node2)
+        return cost_sum
