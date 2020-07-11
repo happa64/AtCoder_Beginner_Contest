@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/agc031/submissions/11427739
+# https://atcoder.jp/contests/agc031/submissions/15131378
 # A - Colorful Subsequence
 import sys
 from collections import Counter
