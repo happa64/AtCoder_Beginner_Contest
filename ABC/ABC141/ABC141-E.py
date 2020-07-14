@@ -9,20 +9,16 @@ mod = 10 ** 9 + 7
 
 def resolve():
     n = int(input())
-    s = input()
-
-    dp = [[0] * (n + 1) for _ in range(n + 1)]
-    for i in reversed(range(n)):
-        for j in reversed(range(n)):
-            if s[i] == s[j]:
-                dp[i][j] = dp[i + 1][j + 1] + 1
+    s = input()[::-1]
 
     res = 0
+    dp = [[0] * n for _ in range(n)]
     for i in range(n):
-        for j in range(n):
-            if i < j:
-                now = min(dp[i][j], j - i)
-                res = max(res, now)
+        for j in range(i + 1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                res = max(res, min(j - i, dp[i][j]))
+
     print(res)
 
 
