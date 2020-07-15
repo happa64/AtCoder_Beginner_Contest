@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/agc019/submissions/15255757
+# B - Reverse and Compare
 import sys
 from collections import Counter
 
