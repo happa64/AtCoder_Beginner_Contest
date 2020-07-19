@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc167/submissions/15311742
+# E - Colorful Blocks
 import sys
 
 sys.setrecursionlimit(10 ** 7)
