@@ -1,7 +1,7 @@
-# https://atcoder.jp/contests/dwacon5th-prelims/submissions/13654680
-# A - Thumbnail
+# https://atcoder.jp/contests/dwacon5th-prelims/submissions/15333042
+# B - Sum AND Subarrays
 import sys
-import statistics
+from itertools import accumulate
 
 sys.setrecursionlimit(10 ** 7)
 input = sys.stdin.readline
@@ -10,18 +10,26 @@ mod = 10 ** 9 + 7
 
 
 def resolve():
-    n = int(input())
+    n, k = map(int, input().split())
     A = list(map(int, input().split()))
 
-    ave = statistics.mean(A)
+    R = [0] + list(accumulate(A))
+    subs = []
+    for left in range(n):
+        for right in range(left + 1, n + 1):
+            subs.append(R[right] - R[left])
 
-    diff = f_inf
     res = 0
-    for i in range(n):
-        if diff > abs(A[i] - ave):
-            res = i
-            diff = abs(A[i] - ave)
-
+    for mask in reversed(range(40)):
+        if len(subs) == 0:
+            break
+        tmp = []
+        for i in range(len(subs)):
+            if subs[i] & (1 << mask):
+                tmp.append(subs[i])
+        if len(tmp) >= k:
+            res += 1 << mask
+            subs = tmp
     print(res)
 
 
