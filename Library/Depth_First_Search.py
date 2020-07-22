@@ -8,7 +8,7 @@ def dfs(v, graph, cur=0):
     :return: 二部グラフであれば真を返す
     """
     color[v] = cur
-    for u in edge[v]:
+    for u in graph[v]:
         if color[u] != -1:
             if color[u] == cur:
                 return False
