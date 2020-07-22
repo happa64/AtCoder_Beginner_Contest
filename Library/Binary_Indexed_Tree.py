@@ -3,6 +3,11 @@ class BIT:
         self.n = len(L)
         self.bit = [0] * (self.n + 1)
 
+    def update(self, idx, x):
+        while idx <= self.n:
+            self.bit[idx] += x
+            idx += idx & (-idx)
+
     def query(self, idx):
         res = 0
         while idx > 0:
@@ -13,7 +18,5 @@ class BIT:
     def sec_sum(self, left, right):
         return self.query(right) - self.query(left)
 
-    def update(self, idx, x):
-        while idx <= self.n:
-            self.bit[idx] += x
-            idx += idx & (-idx)
+    def debug(self):
+        print(*[self.sec_sum(i - 1, i) for i in range(1, self.n + 1)])
