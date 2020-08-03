@@ -16,7 +16,7 @@ class BIT:
         return res
 
     def sec_sum(self, left, right):
-        return self.query(right) - self.query(left)
+        return self.query(right) - self.query(left - 1)
 
     def debug(self):
-        print(*[self.sec_sum(i - 1, i) for i in range(1, self.n + 1)])
+        print(*[self.sec_sum(i, i) for i in range(1, self.n + 1)])
