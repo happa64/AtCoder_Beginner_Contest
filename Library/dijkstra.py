@@ -11,15 +11,19 @@ def dijkstra_heap(v, start, edge):
     """
     res = [f_inf] * v
     res[start] = 0
+    checked = [False] * v
+    checked[start] = True
     edge_list = []
     for u in edge[start]:
         heappush(edge_list, u)
     while len(edge_list):
-        cost, node = heappop(edge_list)
-        if dist[node] == f_inf:
+        min_edge = heappop(edge_list)
+        cost, node = min_edge
+        if not checked[node]:
             res[node] = cost
+            checked[node] = True
             for next_cost, next_node in edge[node]:
-                if dist[node] == f_inf:
+                if not checked[next_node]:
                     heappush(edge_list, [next_cost + cost, next_node])
     return res
 
