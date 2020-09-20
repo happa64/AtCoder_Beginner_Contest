@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/practice2/submissions/16902911
+# https://atcoder.jp/contests/practice2/submissions/16903034
 # D - Maxflow
 import sys
 from collections import deque
@@ -95,10 +95,11 @@ def resolve():
 
     for y in range(n):
         for x in range(m):
-            for to, cap, rev in mf.G[y * m + x]:
-                next_y, next_x = divmod(to, m)
-                if (y + x) % 2 == 0 and cap == 0 and to != start and to != end and \
-                        (y * m + x) != start and (y * m + x) != end:
+            if grid[y][x] == "#" or (y + x) % 2 or (y * m + x) == start or (y * m + x) == end:
+                continue
+            for to, cap, _ in mf.G[y * m + x]:
+                if cap == 0 and to != start and to != end:
+                    next_y, next_x = divmod(to, m)
                     if y + 1 == next_y:
                         grid[y][x] = 'v'
                         grid[next_y][next_x] = '^'
