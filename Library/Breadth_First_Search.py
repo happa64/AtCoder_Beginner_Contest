@@ -31,15 +31,13 @@ print(maze[gy][gx])
 
 # 幅優先探索（最短経路問題）
 def bfs(v):
-    dist = [f_inf for _ in range(n)]
+    dist = [f_inf] * n
     dist[v] = 0
-    q = deque()
-    q.append(v)
+    q = deque([v])
     while q:
         u = q.popleft()
-        for nv in tree[u]:
-            if dist[nv] == f_inf:
-                dist[nv] = dist[u] + 1
-                q.append(nv)
-    for d in dist:
-        res[d] += 1
+        for v in edge[u]:
+            if dist[v] == f_inf:
+                dist[v] = dist[u] + 1
+                q.append(v)
+    return dist
