@@ -56,19 +56,4 @@ class SegTree:
             right >>= 1
         return res
 
-
-def segfunc(x, y):
-    """
-    区間(x,y)に対して行いたい操作の入力
-    最小値：min(x,y)
-    最大値：max(x,y)
-    和：x + y
-    積：x * y
-    最大公約数：math.gcd(x, y)
-    """
-    return min(x, y)
-
-
-# 単位元の入力
-ide_ele = f_inf
-seg = SegTree(a, segfunc, ide_ele)
+seg = SegTree([], lambda x, y: min(x, y), f_inf)
