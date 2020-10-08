@@ -3,7 +3,7 @@ from heapq import heapify, heappop, heappush
 
 def dijkstra_heap(v, start, edge):
     """
-    ダイクストラ法
+    ダイクストラ法：計算量O(ElogV)
     :param v: 走査するグラフの頂点数
     :param start: 始点
     :param edge: 重み付き隣接リスト。[cost, node]の形で渡す
@@ -56,13 +56,14 @@ def dijkstra_heap_2d(H, W, grid, sh, sw):
     return res
 
 
-def dijkstra(s):
-    res = [f_inf] * (n + 2)
+def dijkstra(n, s, cost):
+    """グラフが密な場合のダイクストラ法：計算量O(n^2)"""
+    res = [f_inf] * n
     res[s] = 0
-    checked = [False] * (n + 2)
+    checked = [False] * n
     while True:
         v = -1
-        for k in range(n + 2):
+        for k in range(n):
             if (not checked[k]) and (v == -1):
                 v = k
             elif (not checked[k]) and res[k] < res[v]:
@@ -70,6 +71,6 @@ def dijkstra(s):
         if v == -1:
             break
         checked[v] = True
-        for m in range(n + 2):
+        for m in range(n):
             res[m] = min(res[m], res[v] + cost[v][m])
     return res
