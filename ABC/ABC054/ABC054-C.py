@@ -36,37 +36,29 @@ def resolve2():
     bit DP。計算量O(2^N*N^2)
     """
     n, m = map(int, input().split())
-    edge = [[f_inf] * n for _ in range(n)]
-    for _ in range(m):
-        a, b = map(int, input().split())
-        edge[a - 1][b - 1] = 1
-        edge[b - 1][a - 1] = 1
+    edge = set(tuple(tuple(map(lambda x: int(x) - 1, input().split())) for _ in range(m)))
 
-    dp = [[f_inf] * n for _ in range(1 << n)]
-    dp[0][0] = 0
-    cnt = [[0] * n for _ in range(1 << n)]
-    cnt[0][0] = 1
+    dp = [[0] * n for _ in range(1 << n)]
+    dp[1][0] = 1
     for S in range(1 << n):
-        for v in range(n):
-            for u in range(n):
-                if v == u or S & (1 << v) or edge[u][v] == f_inf:
+        if not (S & 1):
+            continue
+        if S == 1:
+            for v in range(n):
+                if S & (1 << v):
                     continue
-                if dp[S | (1 << v)][v] > dp[S][u] + edge[u][v]:
-                    dp[S | (1 << v)][v] = dp[S][u] + edge[u][v]
-                    cnt[S | (1 << v)][v] = cnt[S][u]
-                elif dp[S | (1 << v)][v] == dp[S][u] + edge[u][v]:
-                    cnt[S | (1 << v)][v] += cnt[S][u]
-
-    mi = min(dp[-2])
-    idx = []
-    for i in range(n):
-        if dp[-2][i] == mi:
-            idx.append(i)
-
-    res = 0
-    for j in idx:
-        res += cnt[-2][j]
-    print(res)
+                if (0, v) in edge or (v, 0) in edge:
+                    dp[S | (1 << v)][v] += dp[S][0]
+        else:
+            for u in range(1, n):
+                if not (S & (1 << u)):
+                    continue
+                for v in range(n):
+                    if S & (1 << v):
+                        continue
+                    if (u, v) in edge or (v, u) in edge:
+                        dp[S | (1 << v)][v] += dp[S][u]
+    print(sum(dp[-1]))
 
 
 if __name__ == '__main__':
