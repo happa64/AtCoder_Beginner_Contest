@@ -1,3 +1,13 @@
+# https://atcoder.jp/contests/abc180/submissions/17494177
+# F - Unbranched
+import sys
+
+sys.setrecursionlimit(10 ** 7)
+input = sys.stdin.readline
+f_inf = float('inf')
+mod = 10 ** 9 + 7
+
+
 class CmbMod:
     def __init__(self, n, p):
         """
@@ -36,3 +46,41 @@ class CmbMod:
             return 0
         r = min(r, n - r)
         return self.fact[n] * self.factinv[r] % self.p * self.factinv[n - r] % self.p
+
+
+def f(X):
+    dp = [[0] * (M + 1) for _ in range(N + 1)]
+    dp[0][0] = 1
+    for i in range(N + 1):
+        for j in range(M + 1):
+            for k in range(1, X + 1):
+                ni = i + k
+                nj = j + k - 1
+                if ni > N or nj > M:
+                    break
+                dp[ni][nj] += cmb.cmb_mod_with_prep(N - i - 1, k - 1) * path[k] % mod * dp[i][j] % mod
+                dp[ni][nj] %= mod
+
+            for k in range(2, X + 1):
+                ni = i + k
+                nj = j + k
+                if ni > N or nj > M:
+                    break
+                dp[ni][nj] += cmb.cmb_mod_with_prep(N - i - 1, k - 1) * cycle[k] % mod * dp[i][j] % mod
+                dp[ni][nj] %= mod
+
+    return dp[-1][-1]
+
+
+N, M, L = map(int, input().split())
+
+cmb = CmbMod(N, mod)
+cmb.prep()
+
+path = [1] * (N + 1)
+for i in range(3, N + 1):
+    path[i] = path[i - 1] * i % mod
+cycle = [0] + path
+
+res = (f(L) - f(L - 1)) % mod
+print(res)
