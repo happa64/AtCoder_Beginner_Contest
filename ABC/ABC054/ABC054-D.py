@@ -11,6 +11,7 @@ mod = 10 ** 9 + 7
 
 
 def resolve():
+    """半分全列挙"""
     n, Ma, Mb = map(int, input().split())
     ABC = [list(map(int, input().split())) for _ in range(n)]
     s = (n + 1) // 2
@@ -50,6 +51,33 @@ def resolve():
                     res = min(res, cost)
             x += Ma
             y += Mb
+    print(res if res != f_inf else -1)
+
+
+def resolve2():
+    """DP"""
+    n, ma, mb = map(int, input().split())
+    ABC = [list(map(int, input().split())) for _ in range(n)]
+    MAX_A = sum([a for a, _, _ in ABC]) + 1
+    MAX_B = sum([b for _, b, _ in ABC]) + 1
+
+    dp = [[[f_inf] * MAX_B for _ in range(MAX_A)] for _ in range(n + 1)]
+    dp[0][0][0] = 0
+    for i in range(n):
+        a, b, c = ABC[i]
+        for j in range(MAX_A):
+            for k in range(MAX_B):
+                dp[i + 1][j][k] = min(dp[i + 1][j][k], dp[i][j][k])
+                if j + a < MAX_A and k + b < MAX_B:
+                    dp[i + 1][j + a][k + b] = min(dp[i + 1][j + a][k + b], dp[i][j][k] + c)
+
+    res = f_inf
+    for i in range(MAX_A):
+        for j in range(MAX_B):
+            if i == j == 0:
+                continue
+            if i * mb == j * ma:
+                res = min(res, dp[-1][i][j])
     print(res if res != f_inf else -1)
 
 
