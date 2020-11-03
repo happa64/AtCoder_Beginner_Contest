@@ -9,6 +9,7 @@ mod = 10 ** 9 + 7
 
 
 def resolve():
+    """二分探索"""
     def meguru_bisect(ok, ng):
         while abs(ok - ng) > 10 ** -6:
             mid = (ok + ng) / 2
@@ -40,6 +41,42 @@ def resolve():
     ng, ok = -1, 10 ** 8 + 1
     res = meguru_bisect(ok, ng)
     print(res)
+
+
+def resolve2():
+    """三分探索"""
+
+    def ternary_search(x):
+        high, low = -10 ** 5, 10 ** 5
+        for _ in range(100):
+            mid_left = high / 3 + low * 2 / 3
+            mid_right = high * 2 / 3 + low / 3
+            if f(x, mid_left) >= f(x, mid_right):
+                low = mid_left
+            else:
+                high = mid_right
+        return f(x, high)
+
+    def f(x1, y1):
+        res = 0
+        for x2, y2, c in XYC:
+            cost = c * max(abs(x1 - x2), abs(y1 - y2))
+            res = max(res, cost)
+        return res
+
+    n = int(input())
+    XYC = [list(map(int, input().split())) for _ in range(n)]
+
+    high, low = -10 ** 5, 10 ** 5
+    for _ in range(100):
+        mid_left = high / 3 + low * 2 / 3
+        mid_right = high * 2 / 3 + low / 3
+        if ternary_search(mid_left) >= ternary_search(mid_right):
+            low = mid_left
+        else:
+            high = mid_right
+
+    print(ternary_search(high))
 
 
 if __name__ == '__main__':
