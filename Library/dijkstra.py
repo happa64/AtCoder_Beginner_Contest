@@ -1,30 +1,57 @@
-from heapq import heapify, heappop, heappush
-
-
-def dijkstra_heap(v, start, edge):
+def dijkstra_heap(n, start, edge):
     """
-    ダイクストラ法：計算量O(ElogV)
-    :param v: 走査するグラフの頂点数
+    疎なグラフの単一始点最短路を求める。O(|E|logN) *|E|は辺の数
+    :param n: 走査するグラフの頂点数
     :param start: 始点
     :param edge: 重み付き隣接リスト。[cost, node]の形で渡す
     :return: 始点から各頂点への最短距離
     """
-    res = [f_inf] * v
+    from heapq import heappop, heappush
+
+    f_inf = float("inf")
+    res = [f_inf] * n
     res[start] = 0
-    checked = [False] * v
-    checked[start] = True
+    used = [False] * n
+    used[start] = True
     edge_list = []
     for u in edge[start]:
         heappush(edge_list, u)
     while len(edge_list):
         min_edge = heappop(edge_list)
         cost, node = min_edge
-        if not checked[node]:
+        if not used[node]:
             res[node] = cost
-            checked[node] = True
+            used[node] = True
             for next_cost, next_node in edge[node]:
-                if not checked[next_node]:
+                if not used[next_node]:
                     heappush(edge_list, [next_cost + cost, next_node])
+    return res
+
+
+def dijkstra(n, start, edge):
+    """
+    密なグラフの単一始点最短路を求める。O(N^2)
+    :param n: 頂点数
+    :param start: 始点
+    :param edge: 重み付き隣接リスト。[cost, node]の形で渡す
+    :return: 始点から各頂点への最短距離
+    """
+    f_inf = float("inf")
+    res = [f_inf] * n
+    res[start] = 0
+    used = [False] * n
+    for _ in range(n):
+        min_dist = f_inf
+        min_v = -1
+        for v in range(n):
+            if not used[v] and res[v] < min_dist:
+                min_dist = res[v]
+                min_v = v
+        if min_v == -1:
+            break
+        for d, u in edge[min_v]:
+            res[u] = min(res[u], res[min_v] + d)
+        used[min_v] = True
     return res
 
 
@@ -38,6 +65,9 @@ def dijkstra_heap_2d(H, W, grid, sh, sw):
     :param sw: 始点のx座標
     :return: 始点から各頂点への最短距離
     """
+    from heapq import heapify, heappop, heappush
+
+    f_inf = float("inf")
     res = [[f_inf] * W for _ in range(H)]
     res[sh][sw] = 0
     que = [(0, sh, sw)]
@@ -48,29 +78,11 @@ def dijkstra_heap_2d(H, W, grid, sh, sw):
             continue
         for dh, dw in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             next_h, next_w = h + dh, w + dw
-            if next_h < 0 or next_h >= H or next_w < 0 or next_w >= W or grid[next_h][next_w] == "#":
+            if next_h < 0 or next_h >= H or next_w < 0 or next_w >= W:
+                continue
+            if grid[next_h][next_w] == "#":
                 continue
             if res[next_h][next_w] > grid[next_h][next_w] + res[h][w]:
                 res[next_h][next_w] = grid[next_h][next_w] + res[h][w]
                 heappush(que, (res[next_h][next_w], next_h, next_w))
-    return res
-
-
-def dijkstra(n, s, cost):
-    """グラフが密な場合のダイクストラ法：計算量O(n^2)"""
-    res = [f_inf] * n
-    res[s] = 0
-    checked = [False] * n
-    while True:
-        v = -1
-        for k in range(n):
-            if (not checked[k]) and (v == -1):
-                v = k
-            elif (not checked[k]) and res[k] < res[v]:
-                v = k
-        if v == -1:
-            break
-        checked[v] = True
-        for m in range(n):
-            res[m] = min(res[m], res[v] + cost[v][m])
     return res

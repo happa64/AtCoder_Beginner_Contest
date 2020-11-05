@@ -1,4 +1,4 @@
-def Bellman_ford(n, start, edge):
+def bellman_ford(n, start, edge):
     """
     負の重みを持つグラフの単一始点最短路を求める。O(V|E|)
     :param n: グラフの頂点数
