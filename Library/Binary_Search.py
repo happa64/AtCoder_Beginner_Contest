@@ -21,9 +21,9 @@ def ternary_search(high, low):
     :param low:取りうる一番小さい値
     :return: 凸関数の極小値（極大値）
     """
-    while abs(high - low) > 10 ** (-9):
-        mid_left = high / 3 + low * 2 / 3
-        mid_right = high * 2 / 3 + low / 3
+    for _ in range(100):
+        mid_left = (high + low) * 2 / 3
+        mid_right = (high * 2 + low) / 3
         if f(mid_left) >= f(mid_right):
             low = mid_left
         else:
