@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/nikkei2019-final/submissions/17894858
+# https://atcoder.jp/contests/nikkei2019-final/submissions/17895142
 # C - Come Together
 import sys
 
@@ -10,13 +10,7 @@ mod = 10 ** 9 + 7
 
 def resolve():
     def ternary_search(left, right, l, L):
-        """
-        f=凸関数の式
-        :param left:取りうる一番大きい値
-        :param right:取りうる一番小さい値
-        :return: 凸関数の極小値（極大値）
-        """
-        for _ in range(100):
+        for _ in range(30):
             mid_right = (left * 2 + right) // 3
             mid_left = (left + right * 2) // 3
             if f(mid_right, l, L) < f(mid_left, l, L):
@@ -33,21 +27,19 @@ def resolve():
     def f(x, l, cnt):
         ret = 0
         for i in range(1, l + 1):
-            ret += abs(x - i) * cnt[i]
+            ret += abs(x - i) * cnt[i - 1]
         return ret
 
     h, w, k = map(int, input().split())
 
-    hc = [h] * (w + 1)
-    wc = [w] * (h + 1)
+    C = [h] * w
+    R = [w] * h
     for _ in range(k):
-        r, c = map(int, input().split())
-        wc[r] -= 1
-        hc[c] -= 1
+        r, c = map(lambda x: int(x) - 1, input().split())
+        R[r] -= 1
+        C[c] -= 1
 
-    res = 0
-    res += ternary_search(0, h, h, wc)
-    res += ternary_search(0, w, w, hc)
+    res = ternary_search(0, h, h, R) + ternary_search(0, w, w, C)
     print(res)
 
 
