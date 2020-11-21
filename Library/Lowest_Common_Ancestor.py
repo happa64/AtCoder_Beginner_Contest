@@ -36,15 +36,14 @@ class LowestCommonAncestor:
         """uとvのLCAをO(logN)で求める"""
         if self.depth[v] < self.depth[u]:
             u, v = v, u
-        du = self.depth[u]
-        dv = self.depth[v]
-
+        # LCAまでの距離を同じにする
+        du, dv = self.depth[u], self.depth[v]
         for i in range(self.logn):
             if (dv - du) >> i & 1:
                 v = self.parent[i][v]
+        # 二分探索でLCAを求める
         if u == v:
             return u
-
         for i in range(self.logn - 1, -1, -1):
             pu, pv = self.parent[i][u], self.parent[i][v]
             if pu != pv:
