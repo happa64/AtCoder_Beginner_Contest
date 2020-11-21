@@ -1,11 +1,17 @@
 class LowestCommonAncestor:
+    """木のLCAを求める。構築：O(NlogN),クエリ：O(logN)"""
     def __init__(self, G, root=0):
+        """
+        :param G: 木の隣接リスト。[(コスト,頂点),(コスト,頂点)…]の形で渡す
+        :param root: 木の根
+        """
         self.G = G
         self.root = root
         self.n = len(G)
         self.logn = (self.n - 1).bit_length()
-        self.depth = [-1 if i != root else 0 for i in range(self.n)]
-        self.parent = [[-1] * self.n for _ in range(self.logn)]
+        self.dist = [0] * self.n  # dist[v]:根からvの距離
+        self.depth = [-1 if i != root else 0 for i in range(self.n)]  # depth[v]:頂点vの深さ
+        self.parent = [[-1] * self.n for _ in range(self.logn)]  # parent[k][v]:頂点vの2^k先の親
         self.dfs()
         self.doubling()
 
@@ -13,8 +19,9 @@ class LowestCommonAncestor:
         que = [self.root]
         while que:
             u = que.pop()
-            for v in self.G[u]:
+            for cost, v in self.G[u]:
                 if self.depth[v] == -1:
+                    self.dist[v] = self.dist[u] + cost
                     self.depth[v] = self.depth[u] + 1
                     self.parent[0][v] = u
                     que += [v]
@@ -26,6 +33,7 @@ class LowestCommonAncestor:
                     self.parent[i][v] = self.parent[i - 1][self.parent[i - 1][v]]
 
     def get_lca(self, u, v):
+        """uとvのLCAをO(logN)で求める"""
         if self.depth[v] < self.depth[u]:
             u, v = v, u
         du = self.depth[u]
@@ -44,6 +52,6 @@ class LowestCommonAncestor:
         return self.parent[0][u]
 
     def get_dist(self, u, v):
+        """uとvの距離をO(logN)で求める"""
         r = self.get_lca(u, v)
-        dist = (self.depth[u] - self.depth[r]) + (self.depth[v] - self.depth[r])
-        return dist
+        return (self.dist[u] - self.dist[r]) + (self.dist[v] - self.dist[r])
