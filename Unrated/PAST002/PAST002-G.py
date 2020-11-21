@@ -34,7 +34,7 @@ def resolve():
                 # 文字の長さがdより大きければ、文字の長さからdを引き、キー；文字、バリュー；dとした辞書を作成する（元々キーがあれば加算）
                 else:
                     que[0][1] = int(que[0][1]) - d
-                    delete_list[c] = delete_list.get(c, 0) + d
+                    delete_list[c] = delete_list.query(c, 0) + d
                     d = 0
 
             # 辞書からバリューを取り出して、2乗した和を計算
