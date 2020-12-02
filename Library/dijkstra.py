@@ -28,12 +28,12 @@ def dijkstra_heap(n, start, edge):
     return res
 
 
-def dijkstra(n, start, edge):
+def dijkstra(n, start, cost):
     """
     密なグラフの単一始点最短路を求める。O(N^2)
     :param n: 頂点数
     :param start: 始点
-    :param edge: 重み付き隣接リスト。[cost, node]の形で渡す
+    :param cost: 各頂点間のコストを入力した二次元配列
     :return: 始点から各頂点への最短距離
     """
     f_inf = float("inf")
@@ -49,7 +49,7 @@ def dijkstra(n, start, edge):
                 min_v = v
         if min_v == -1:
             break
-        for d, u in edge[min_v]:
+        for u, d in enumerate(cost[min_v]):
             res[u] = min(res[u], res[min_v] + d)
         used[min_v] = True
     return res
