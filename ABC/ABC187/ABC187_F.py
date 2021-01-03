@@ -17,20 +17,17 @@ def resolve():
         E[b] |= 1 << a
 
     dp = [f_inf] * (1 << n)
-    dp[0] = 0
-    for i in range(1 << n):
-        for j in range(n):
-            if not (i & (1 << j)):
-                continue
-            target = i ^ (1 << j)
-            if dp[target] <= 1 and (E[j] & target) == target:
-                dp[i] = 1
+    dp[0] = 1
+    for S in range(1 << n):
+        for v in range(n):
+            if dp[S] == 1 and not (S & (1 << v)) and S & E[v] == S:
+                dp[S | (1 << v)] = 1
 
-    for i in range(1 << n):
-        j = (i - 1) & i
-        while j > 0:
-            dp[i] = min(dp[i], dp[j] + dp[i ^ j])
-            j = (j - 1) & i
+        s = (S - 1) & S
+        while s > 0:
+            dp[S] = min(dp[S], dp[s] + dp[S ^ s])
+            s = (s - 1) & S
+
     print(dp[-1])
 
 
