@@ -31,14 +31,14 @@ def resolve():
         t.append((a, b))
 
     # 「(a, b)のペアから、aとbを一個だけ選ぶ操作をn個全てのペアに対して行う。min{a}+min{b}の最大値を求めよ」
-    # という問題帰結でき、これはbを昇順,aを降順にソートして前から見ていくことで解ける。
-    t.sort(key=lambda x: [x[1], -x[0]])
+    # という問題帰結でき、これはaを昇順,bを降順にソートして前から見ていくことで解ける。
+    t.sort(key=lambda x: [x[0], -x[1]])
     w = f_inf
     for i in range(n):
         a, b = t[i]
         if i != 0:
-            res = max(res, w + b)
-        w = min(w, a)
+            res = max(res, w + a)
+        w = min(w, b)
     print(res)
 
 
