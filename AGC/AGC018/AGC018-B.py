@@ -27,7 +27,7 @@ def resolve():
                         target = A[i][j]
                     break
 
-        remove.add(target)
+        remove.insert(target)
         res = min(res, ma)
         dfs(remove)
 
