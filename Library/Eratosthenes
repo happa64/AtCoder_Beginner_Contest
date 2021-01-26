@@ -3,7 +3,6 @@ class Eratosthenes:
         self.n = n
         self.min_factor = [-1] * (n + 1)
         self.min_factor[0], self.min_factor[1] = 0, 1
-        self.get_primes()
 
     def get_primes(self):
         primes = []
