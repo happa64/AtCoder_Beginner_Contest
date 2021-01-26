@@ -3,21 +3,24 @@ class Eratosthenes:
         self.n = n
         self.min_factor = [-1] * (n + 1)
         self.min_factor[0], self.min_factor[1] = 0, 1
+        self.primes = []
+        self.get_primes()
 
     def get_primes(self):
-        primes = []
         is_prime = [True] * (self.n + 1)
         is_prime[0] = is_prime[1] = False
         for i in range(2, self.n + 1):
             if not is_prime[i]:
                 continue
-            primes.append(i)
+            self.primes.append(i)
             self.min_factor[i] = i
             for j in range(i * 2, self.n + 1, i):
                 is_prime[j] = False
                 if self.min_factor[j] == -1:
                     self.min_factor[j] = i
-        return primes
+
+    def return_primes(self):
+        return self.primes
 
     def prime_factorization(self, n):
         res = []
@@ -27,5 +30,5 @@ class Eratosthenes:
             while self.min_factor[n] == prime:
                 exp += 1
                 n //= prime
-            res.append([prime, exp])
+            res.append((prime, exp))
         return res
