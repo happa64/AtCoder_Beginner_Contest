@@ -22,7 +22,7 @@ def ternary_search(high, low):
     :return: 凸関数の極小値（極大値）
     """
     for _ in range(100):
-        mid_left = (high + low) * 2 / 3
+        mid_left = (high + low * 2) / 3
         mid_right = (high * 2 + low) / 3
         if f(mid_left) >= f(mid_right):
             low = mid_left
