@@ -1,7 +1,5 @@
 def prime_factorization(n):
-    """
-    nを素因数分解します
-    """
+    """ nを素因数分解する。O(√N) """
     res = []
     for i in range(2, int(pow(n, 0.5)) + 1):
         if n % i == 0:
@@ -12,5 +10,4 @@ def prime_factorization(n):
             res.append([i, ex])
     if n != 1:
         res.append([n, 1])
-
     return res
