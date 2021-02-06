@@ -27,5 +27,18 @@ def resolve():
     print(res)
 
 
+def resolve2():
+    import numpy as np
+    from scipy.sparse.csgraph import floyd_warshall
+
+    h, w = map(int, input().split())
+    graph = np.array([list(map(int, input().split())) for _ in range(10)])
+    A = tuple(tuple(map(int, input().split())) for _ in range(h))
+
+    dist = floyd_warshall(graph)
+    res = sum(dist[A[i][j]][1] if A[i][j] != -1 else 0 for i in range(h) for j in range(w))
+    print(int(res))
+
+
 if __name__ == '__main__':
     resolve()
