@@ -46,24 +46,20 @@ def resolve2():
     from scipy.sparse.csgraph import floyd_warshall
     from itertools import permutations
 
-    def solve():
-        n, m, r = map(int, input().split())
-        R = list(map(lambda x: int(x) - 1, input().split()))
-        edge = np.array([input().split() for _ in range(m)], dtype=np.int64).T
-        graph = csr_matrix((edge[2], edge[:2] - 1), shape=(n, n))
-        dist = floyd_warshall(graph, directed=False)
+    n, m, r = map(int, input().split())
+    R = list(map(lambda x: int(x) - 1, input().split()))
+    edge = np.array([input().split() for _ in range(m)], dtype=np.int64).T
+    graph = csr_matrix((edge[2], edge[:2] - 1), shape=(n, n))
+    dist = floyd_warshall(graph, directed=False)
 
-        res = f_inf
-        for pattern in permutations(R):
-            tot = 0
-            for i in range(1, r):
-                prev, now = pattern[i - 1], pattern[i]
-                tot += dist[prev][now]
-            res = min(res, tot)
-        print(int(res))
-
-    if __name__ == '__main__':
-        solve()
+    res = f_inf
+    for pattern in permutations(R):
+        tot = 0
+        for i in range(1, r):
+            prev, now = pattern[i - 1], pattern[i]
+            tot += dist[prev][now]
+        res = min(res, tot)
+    print(int(res))
 
 
 if __name__ == '__main__':
