@@ -2,31 +2,30 @@ class UnionFind:
     def __init__(self, n):
         self.n = n
         self.par = [-1] * n
-        self.diff_weight = [0] * n
+        self.wei = [0] * n
 
     def find(self, x):
         if self.par[x] < 0:
             return x
         else:
             y = self.find(self.par[x])
-            self.diff_weight[x] += self.diff_weight[self.par[x]]
+            self.wei[x] += self.wei[self.par[x]]
             self.par[x] = y
             return y
 
     def union(self, x, y, w=0):
-        w += self.diff_weight[x] - self.diff_weight[y]
+        w += self.weight(x) - self.weight(y)
         x = self.find(x)
         y = self.find(y)
         if x == y:
             return False
-        else:
-            if self.par[x] > self.par[y]:
-                x, y = y, x
-                w *= -1
-            self.par[x] += self.par[y]
-            self.par[y] = x
-            self.diff_weight[y] = w
-            return True
+        if self.par[x] > self.par[y]:
+            x, y = y, x
+            w *= -1
+        self.par[x] += self.par[y]
+        self.par[y] = x
+        self.wei[y] = w
+        return True
 
     def same(self, x, y):
         return self.find(x) == self.find(y)
@@ -36,7 +35,7 @@ class UnionFind:
 
     def weight(self, x):
         self.find(x)
-        return self.diff_weight[x]
+        return self.wei[x]
 
     def diff(self, x, y):
         return self.weight(y) - self.weight(x)
