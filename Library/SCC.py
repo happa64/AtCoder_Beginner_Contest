@@ -13,16 +13,15 @@ class SCC:
     self.red_comps : i番目の強連結成分に含まれる頂点集合
     -----
     topological_sort() により生成
-    self.tp_order : 強連結成分を縮約したグラフ上の頂点番号をトポロジカル順に並べた集合
+    self.top_order : 強連結成分を縮約したグラフ上の頂点番号をトポロジカル順に並べた集合
     """
     def __init__(self, graph):
         self.n = len(graph)
         self.graph = graph
-        self.reverse_graph = [[] for _ in range(self.n)]
         self.order = []
         self.group = [-1] * self.n
 
-
+        self.reverse_graph = [[] for _ in range(self.n)]
         for u in range(self.n):
             for v in self.graph[u]:
                 self.reverse_graph[v].append(u)
@@ -56,10 +55,10 @@ class SCC:
     def reduction(self):
         """ 強連結成分を縮約したグラフを構築 """
         self.red_graph = [[] for _ in range(self.label)]
-        self.red_comps = [[] for _ in range(self.label)]
+        # self.red_comps = [[] for _ in range(self.label)]
         for v in range(self.n):
             g = self.group[v]
-            self.red_comps[g].append(v)
+            # self.red_comps[g].append(v)
             for nv in self.graph[v]:
                 if self.group[nv] != g:
                     self.red_graph[g].append(self.group[nv])
@@ -67,18 +66,16 @@ class SCC:
     def topological_sort(self):
         """ 縮約したグラフ上でトポロジカルソート """
         from collections import deque
-        n = self.label
-        ind = [0] * n
-        for v in range(n):
+        ind = [0] * self.label
+        for v in range(self.label):
             for nv in self.red_graph[v]:
                 ind[nv] += 1
-        que = deque([i for i in range(n) if ind[i] == 0])
-        res = []
+        que = deque([i for i in range(self.label) if ind[i] == 0])
+        self.top_order = []
         while que:
             u = que.popleft()
-            res.append(u)
+            self.top_order.append(u)
             for v in self.red_graph[u]:
                 ind[v] -= 1
                 if ind[v] == 0:
                     que.append(v)
-        return res
