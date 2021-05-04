@@ -1,3 +1,5 @@
+# https://atcoder.jp/contests/abc199/submissions/22262479
+# D - RGB Coloring 2
 import sys
 
 sys.setrecursionlimit(10 ** 7)
@@ -6,33 +8,54 @@ f_inf = float('inf')
 MOD = 10 ** 9 + 7
 
 
-def dfs(v, edge, paint, color=0):
-    if any(paint[u] == color for u in edge[v]):
-        return 0
-    paint[v] = color
-    res = 1
+def dfs1(v, edge, visited, res):
+    res.append(v)
+    visited[v] = True
     for u in edge[v]:
-        if paint[u] == -1:
+        if visited[u]:
+            continue
+        dfs1(u, edge, visited, res)
+    return res
 
 
+def dfs2(i, edge, vertexs, col):
+    if i == len(vertexs):
+        return 1
+    res = 0
+    v = vertexs[i]
+    for c in range(3):
+        ok = True
+        for u in edge[v]:
+            if col[u] == c:
+                ok = False
+                break
+        if not ok:
+            continue
+        col[v] = c
+        res += dfs2(i + 1, edge, vertexs, col)
+        col[v] = -1
+    return res
 
-def main():
+
+def solve():
     n, m = map(int, input().split())
     edge = [[] for _ in range(n)]
     for _ in range(m):
-        a, b = map(int, input().split())
-        edge[a - 1].append(b - 1)
-        edge[b - 1].append(a - 1)
+        a, b = map(lambda x: int(x) - 1, input().split())
+        edge[a].append(b)
+        edge[b].append(a)
 
-    res = 1
-    paint = [-1] * n
+    ans = 1
+    visited = [False] * n
+    col = [-1] * n
     for i in range(n):
-        if paint[i] == -1:
+        if visited[i]:
             continue
-        paint[i] = 0
-        res *= 3 * dfs(i, edge)
-    print(res)
+        vertexs = dfs1(i, edge, visited, [])
+        col[vertexs[0]] = 0
+        ans *= 3 * dfs2(1, edge, vertexs, col)
+    print(ans)
 
 
 if __name__ == '__main__':
-    main()
+    solve()
