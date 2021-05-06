@@ -24,7 +24,7 @@ def dijkstra_heap(n, start, edge):
             used[node] = True
             for next_cost, next_node in edge[node]:
                 if not used[next_node]:
-                    heappush(edge_list, [next_cost + cost, next_node])
+                    heappush(edge_list, (next_cost + cost, next_node))
     return res
 
 
