@@ -6,3 +6,5 @@ def is_prime(n):
         if n % k == 0:
             return False
     return True
+
+print(is_prime(1000033))
