@@ -15,17 +15,18 @@ def solve():
     rt, ct, = map(lambda z: int(z) - 1, input().split())
     S = tuple(input().rstrip() for _ in range(H))
 
+    # 拡張ダイクストラ
     dp = [[[f_inf] * W for _ in range(H)] for _ in range(2)]
     dp[0][rs][cs] = dp[1][rs][cs] = 0
-    que = deque([(-1, rs, cs)])
+    que = deque([(-1, rs, cs)])  # (直前の向き, 今いるノードの行, 今いるノードの列)
     while que:
         p, h, w = que.popleft()
         for dh, dw in ((0, 1), (1, 0), (0, -1), (-1, 0)):
             next_h, next_w = h + dh, w + dw
             if next_h < 0 or next_w < 0 or next_h >= H or next_w >= W or S[next_h][next_w] == "#":
                 continue
-            u = 0 if dh == 0 else 1
-            x = 0 if p == -1 or p == u else 1
+            u = 0 if dh == 0 else 1  # u=0:上下移動, u=1：左右移動
+            x = 0 if p == -1 or p == u else 1  # 向きが直前から変えるならコスト+1
             cost = dp[p][h][w] + x
             if dp[u][next_h][next_w] > cost:
                 dp[u][next_h][next_w] = cost
