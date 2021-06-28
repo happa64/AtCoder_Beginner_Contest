@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/typical90/submissions/22712287
+# https://atcoder.jp/contests/typical90/submissions/23847062
 # 043 - Maze Challenge with Lack of Sleep（★4）
 import sys
 from collections import deque
@@ -15,7 +15,6 @@ def solve():
     rt, ct, = map(lambda z: int(z) - 1, input().split())
     S = tuple(input().rstrip() for _ in range(H))
 
-    # 拡張ダイクストラ
     dp = [[[f_inf] * W for _ in range(H)] for _ in range(2)]
     dp[0][rs][cs] = dp[1][rs][cs] = 0
     que = deque([(-1, rs, cs)])  # (直前の向き, 今いるノードの行, 今いるノードの列)
@@ -30,7 +29,7 @@ def solve():
             cost = dp[p][h][w] + x
             if dp[u][next_h][next_w] > cost:
                 dp[u][next_h][next_w] = cost
-                que.append((u, next_h, next_w))
+                que.appendleft((u, next_h, next_w)) if x == 0 else que.append((u, next_h, next_w))
     print(min(dp[0][rt][ct], dp[1][rt][ct]))
 
 
