@@ -172,11 +172,11 @@ def solve():
         mf.add_edge(n + i, tv, 1)
 
     # マッチング
-    if n == mf.flow(sv, tv, n):
+    if n == mf.flow(sv, tv):
         # グラフの再構築
         res = [0] * n
         for e in mf.edges():
-            if e.cap == e.flow == 1:
+            if e.flow == 1:
                 fr, to = e.src, e.dst
                 if fr == sv or to == sv or fr == tv or to == tv:
                     continue
